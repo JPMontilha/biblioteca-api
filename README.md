@@ -20,6 +20,7 @@ Após isso, deve-se criar um arquivo .env na raiz do projeto com o seguinte cont
 
 ```
 MONGODB_URI=mongodb://localhost:27017/nome-do-bd
+JWT_SECRET=chave_secreta
 ```
 
 Com isso o sistema já está pronto para uso. Para iniciá-lo basta apenas usar o comando:
@@ -35,3 +36,10 @@ Para mais informações sobre as rotas do sistema, acessa a rota GET/docs ou rod
 ```
 npm run swagger-autogen
 ```
+
+### Observação
+
+Para utilizar o token gerado durante o login, coloque-o no header da requisição com a seguinte chave:
+
+- Key: Authorization
+- Value: Bearer token
