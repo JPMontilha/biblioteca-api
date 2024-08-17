@@ -1,6 +1,7 @@
 const Autor = require('../models/autor');
 const Livro = require('../models/livro');
 const Cliente = require('../models/cliente');
+const User = require('../models/user');
 
 exports.installDatabase = async (req, res) => {
   try {
@@ -45,6 +46,18 @@ exports.installDatabase = async (req, res) => {
         { nome: "Ricardo", email: "leitor@email.com", livro_comprado: [livros[0]?._id, livros[1]?._id, livros[2]?._id, livros[3]?._id, livros[4]?._id] },
         { nome: "Alice", email: "superman@email.com", telefone: "(00) 40000-0000", livro_comprado: [livros[1]?._id, livros[2]?._id] }
       ]);
+    }
+
+    // Verifica se já existe algum adiministrador cadastrado
+    const existingAdmin = await User.findOne({ role: 'admin' });
+    if (!existingAdmin) {
+      //Cadastrar o admin
+      const admin = await User.create({
+        email: 'admin@email.com',
+        senha: 'admin123',
+        role: 'admin'
+      });
+      console.log('Usuário administrador criado:\n', admin);
     }
 
     res.status(200).json({ message: 'Banco de dados inicializado com sucesso!' });
