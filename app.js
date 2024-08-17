@@ -3,6 +3,7 @@ const connectDB = require('./config/database');
 const autorRoutes = require('./routes/autorRoutes');
 const livroRoutes = require('./routes/livroRoutes');
 const clienteRoutes = require('./routes/clienteRoutes');
+const installRoutes = require('./routes/installRoutes');
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use('/api', autorRoutes);
 app.use('/api', livroRoutes);
 app.use('/api', clienteRoutes);
+app.use('', installRoutes);
 
 const PORT = process.env.PORT || 5000;
 
