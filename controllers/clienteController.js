@@ -11,13 +11,32 @@ exports.createCliente = async (req, res) => {
   }
 };
 
-//Ler clientes
+// Listar clientes com paginação
 exports.getClientes = async (req, res) => {
   try {
-    const clientes = await Cliente.find().populate('livro_comprado');
-    res.status(200).json(clientes);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+    let { limite, pagina } = req.query;
+
+    limite = parseInt(limite) || 10;
+    pagina = parseInt(pagina) || 1;
+    const allowedLimits = [5, 10, 30];
+
+    if (!allowedLimits.includes(limite)) {
+      limite = 10;
+    }
+
+    const skip = (pagina - 1) * limite;
+    const clientes = await Cliente.find().skip(skip).limit(limite);
+    const totalClientes = await Cliente.countDocuments();
+
+    res.json({
+      page: pagina,
+      limit: limite,
+      total: totalClientes,
+      clientes: clientes,
+    });
+    
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao listar clientes', error });
   }
 };
 

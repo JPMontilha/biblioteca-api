@@ -44,7 +44,12 @@ exports.installDatabase = async (req, res) => {
         { nome: "Lucas", email: "teste@email.com", telefone: "(00) 10000-0000", livro_comprado: [livros[0]?._id, livros[3]?._id] },
         { nome: "Nicole", email: "cliente@email.com", telefone: "(00) 20000-0000", livro_comprado: [livros[4]?._id] },
         { nome: "Ricardo", email: "leitor@email.com", livro_comprado: [livros[0]?._id, livros[1]?._id, livros[2]?._id, livros[3]?._id, livros[4]?._id] },
-        { nome: "Alice", email: "superman@email.com", telefone: "(00) 40000-0000", livro_comprado: [livros[1]?._id, livros[2]?._id] }
+        { nome: "Alice", email: "superman@email.com", telefone: "(00) 40000-0000", livro_comprado: [livros[1]?._id, livros[2]?._id] },
+        { nome: "Pedro", email: "koala@email.com", telefone: "(00) 50000-0000", livro_comprado: [livros[3]?._id] },
+        { nome: "Miguel", email: "agente@email.com", telefone: "(00) 60000-0000", livro_comprado: [livros[2]?._id, livros[3]?._id] },
+        { nome: "Julia", email: "garota@email.com", telefone: "(00) 70000-0000", livro_comprado: [livros[0]?._id] },
+        { nome: "Marcos", email: "talco@email.com", livro_comprado: [livros[0]?._id, livros[1]?._id, livros[2]?._id] },
+        { nome: "Guilherme", email: "batman@email.com", telefone: "(00) 80000-0000", livro_comprado: [livros[1]?._id, livros[4]?._id] }
       ]);
     }
 

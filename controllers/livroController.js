@@ -11,17 +11,36 @@ exports.createLivro = async (req, res) => {
   }
 };
 
-//Ler livros (no bd, não literalmente)
+// Listar livros com paginação
 exports.getLivros = async (req, res) => {
   try {
-    const livros = await Livro.find().populate('autor');
-    res.status(200).json(livros);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+    let { limite, pagina } = req.query;
+
+    limite = parseInt(limite) || 10;
+    pagina = parseInt(pagina) || 1;
+    const allowedLimits = [5, 10, 30];
+
+    if (!allowedLimits.includes(limite)) {
+      limite = 10;
+    }
+
+    const skip = (pagina - 1) * limite;
+    const livros = await Livro.find().skip(skip).limit(limite);
+    const totalLivros = await Livro.countDocuments();
+
+    res.json({
+      page: pagina,
+      limit: limite,
+      total: totalLivros,
+      livros: livros,
+    });
+    
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao listar clientes', error });
   }
 };
 
-//Ler livro único
+//Ler livro único (no bd, não literalmente)
 exports.getLivro = async (req, res) => {
   try {
     const livros = await Livro.findById(req.params.id).populate('autor');
