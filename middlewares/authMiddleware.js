@@ -19,3 +19,11 @@ exports.protect = async (req, res, next) => {
     res.status(401).json({ message: 'Não autorizado, sem token' });
   }
 };
+
+exports.isAdmin = (req, res, next) => {
+  if (req.user && req.user.role === 'admin') {
+    next();
+  } else {
+    res.status(403).json({ message: 'Acesso negado, você não tem permissão' });
+  }
+};
