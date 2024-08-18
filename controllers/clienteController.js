@@ -1,4 +1,5 @@
 const Cliente = require('../models/cliente');
+const Livro = require('../models/livro');
 
 //Criar um cliente
 exports.createCliente = async (req, res) => {
@@ -69,5 +70,40 @@ exports.deleteCliente = async (req, res) => {
     res.status(200).json({ message: 'Cliente deletado com sucesso' });
   } catch (err) {
     res.status(400).json({ error: err.message });
+  }
+};
+
+// Adicionar livro para cliente
+exports.comprandoLivro = async (req, res) => {
+  try {
+    const { clienteId, livroId } = req.body;
+
+    // Validando cliente
+    const cliente = await Cliente.findById(clienteId);
+    if (!cliente) {
+      return res.status(404).json({ message: 'Cliente não encontrado' });
+    }
+
+    // Validando livro
+    const livro = await Livro.findById(livroId);
+    if (!livro) {
+      return res.status(404).json({ message: 'Livro não encontrado' });
+    }
+
+    // Verificando se o livro já foi comprado
+    if (cliente.livro_comprado.includes(livroId)) {
+      return res.status(400).json({ message: 'Livro já foi comprado' });
+    }
+
+    // Adicionando o livro à lista de livros comprados
+    cliente.livro_comprado.push(livroId);
+    await cliente.save();
+
+    res.status(200).json({
+      message: 'Livro comprado com sucesso',
+      livro_comprado: cliente.livro_comprado,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao realizar a compra', error });
   }
 };

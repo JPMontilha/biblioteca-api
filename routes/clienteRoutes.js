@@ -8,5 +8,6 @@ router.get('/clientes', protect, isAdmin, clienteController.getClientes);
 router.get('/clientes/:id', protect, isAdmin, clienteController.getCliente);
 router.put('/clients/:id', protect, isAdmin, clienteController.updateCliente);
 router.delete('/clients/:id', protect, isAdmin, clienteController.deleteCliente);
+router.post('/compra', protect, isAdmin, clienteController.comprandoLivro);
 
 module.exports = router;
