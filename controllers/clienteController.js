@@ -107,3 +107,22 @@ exports.comprandoLivro = async (req, res) => {
     res.status(500).json({ message: 'Erro ao realizar a compra', error });
   }
 };
+
+// Listando dinheiro gasto
+exports.getClienteCompras = async (req, res) => {
+  try {
+    const clientes = await Cliente.findById(req.params.id).populate('livro_comprado');
+
+    livros_comprados = clientes.livro_comprado;
+    compras_feitas = livros_comprados.length;
+    preco = 0;
+    livros_comprados.forEach(element => {
+      preco += element.preco;
+    });
+    preco = parseFloat(preco.toFixed(2));
+
+    res.status(200).json({"compras_feitas": compras_feitas, "preço": preco});
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
